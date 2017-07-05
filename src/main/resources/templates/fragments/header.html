@@ -1,7 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 
-
 <div th:fragment="header-css">
 
 	<!-- Latest compiled and minified CSS -->
@@ -31,6 +30,7 @@
 						<li class="active"><a th:href="@{/about}">About us</a></li>
 						<li class="active"><a th:href="@{/contact}">Contact us</a></li>
 						<li class="active"><a th:href="@{/login}">Login</a></li>
+						<li th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" class="active"><a th:href="@{/logout}">Logout</a></li>
 						<li class="active"><a th:href="@{/register}">Register</a></li>
 					</ul>
 				</div>

@@ -9,15 +9,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	@Autowired
-	private AccessDeniedHandler accessDeniedHandler;
-
 	@Autowired
 	private DataSource datasource;
 
@@ -43,7 +39,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 			authorizeRequests()
 				.antMatchers("/").permitAll()
 				.antMatchers("/login").permitAll()
-				.antMatchers("/registration").permitAll()
+				.antMatchers("/about").permitAll()
+				.antMatchers("/contact").permitAll()
+				.antMatchers("/register").permitAll()
 				.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
 				.authenticated().and().csrf().disable().formLogin()
 				.loginPage("/login").failureUrl("/login?error=true")
@@ -55,12 +53,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				.logoutSuccessUrl("/").and().exceptionHandling()
 				.accessDeniedPage("/error/403");
 	}
-	
-//	@Autowired
-//	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.inMemoryAuthentication().withUser("user").password("user").roles("USER").and().withUser("admin@live.com")
-//				.password("admin").roles("ADMIN");
-//	}
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
